@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type=button] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+/* Radio button CSS */
+
+/* The container */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+
+</style>
+<body>
+
+<h3>Add Books to Maddie's Online Classroom Library</h3>
+
+<div>
+  <form action="{{ url_for("main")}}" method="post" role="form">
+      <div class="form-group">
+          <label for="isbn-in">ISBN Number</label>
+          <input type="text" id="isbn-in" name="isbn-in" autofocus placeholder="1234567890">
+
+{#          <label for="lname">Last Name</label>#}
+{#          <input type="text" id="lname" name="lastname" placeholder="Your last name..">#}
+
+          <label for="sheet">Sheet</label>
+          <select id="sheet" name="sheet_selected">
+              <option name="sheet_picture_books" {{ picture_books_selected }} value="sheet_picture_books">Picture Books</option>
+              <option name="sheet_chapter_books" {{ chapter_books_selected }} value="sheet_chapter_books">Chapter Books</option>
+          </select>
+
+{#          <h3 >Collection</h3>#}
+{#            <label class="container">Picture Books#}
+{#              <input type="radio" id="picture_books" {{ picture_books_selected }} name="radio">#}
+{#              <span class="checkmark"></span>#}
+{#            </label>#}
+{#            <label class="container">Chapter Books#}
+{#              <input type="radio" id="chapter_books" {{ chapter_books_selected }} name="radio">#}
+{#              <span class="checkmark"></span>#}
+{#            </label>#}
+
+          <input type="submit" name="submit_button" value="Submit">
+          <input type="submit" name="submit_button" value="Sort Sheet">
+      </div>
+      {% with messages = get_flashed_messages() %}
+          {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                     {{ message }}
+                {% endfor %}
+                </ul>
+          {% endif %}
+      {% endwith %}
+      {% block body %}{% endblock %}
+{#       {% with messages = get_flashed_messages(with_categories=true) %}#}
+{#            {% if messages %}#}
+{##}
+{#        {% for message in messages %}#}
+{#            {% if "Error" not in message[1] %}#}
+{#                <div class="alert alert-info">#}
+{#                <strong>Success! </strong> {{ message[1] }}#}
+{#                </div>#}
+{#            {% endif %}#}
+{##}
+{#            {% if "Error" in message[1] %}#}
+{#                <div class="alert alert-danger">#}
+{#                <strong>Error: </strong> {{ message[1] }}#}
+{#                </div>#}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+{#            {% endif %}#}
+{#        {% endwith %}#}
+
+  </form>
+</div>
+
+</body>
+</html>
