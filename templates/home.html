@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <style>
+
 input[type=text], select {
   width: 100%;
   padding: 12px 20px;
@@ -48,9 +49,9 @@ div {
   display: block;
   position: relative;
   padding-left: 35px;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   cursor: pointer;
-  font-size: 18px;
+  <!-- font-size: 18px; -->
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -64,6 +65,16 @@ div {
   cursor: pointer;
 }
 
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+
 /* Create a custom radio button */
 .checkmark {
   position: absolute;
@@ -75,13 +86,33 @@ div {
   border-radius: 50%;
 }
 
+/* Create a custom checkbox */
+.checkmark_checkbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
   background-color: #ccc;
 }
 
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark_checkbox {
+  background-color: #ccc;
+}
+
 /* When the radio button is checked, add a blue background */
 .container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark_checkbox {
   background-color: #2196F3;
 }
 
@@ -92,19 +123,46 @@ div {
   display: none;
 }
 
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark_checkbox:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+
 /* Show the indicator (dot/circle) when checked */
 .container input:checked ~ .checkmark:after {
   display: block;
 }
 
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark_checkbox:after {
+  display: block;
+}
+
+
 /* Style the indicator (dot/circle) */
 .container .checkmark:after {
- 	top: 9px;
-	left: 9px;
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	background: white;
+        top: 9px;
+        left: 9px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: white;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark_checkbox:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 </style>
@@ -136,9 +194,13 @@ div {
 {#              <input type="radio" id="chapter_books" {{ chapter_books_selected }} name="radio">#}
 {#              <span class="checkmark"></span>#}
 {#            </label>#}
-
+          <label class="container">Lookup Only
+            <input type="checkbox" id="lookup_only" name="lookup_only" {{ lookup_only_selected }} name="lookup_only_checkbox">
+            <span class="checkmark_checkbox"></span>
+          </label>
           <input type="submit" name="submit_button" value="Submit">
           <input type="submit" name="submit_button" value="Sort Sheet">
+          <!-- <input type="submit" name="submit_button" value="Generate ISBNs"> -->
       </div>
       {% with messages = get_flashed_messages() %}
           {% if messages %}
